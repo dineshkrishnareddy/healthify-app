@@ -1,3 +1,0 @@
-Django==1.9.7
-APScheduler==3.3.1
-requests==2.11.1
