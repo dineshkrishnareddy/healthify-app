@@ -1,0 +1,112 @@
+<html>
+{% load static %}
+<head>
+    <title>Healthify App</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'notification/vendors/css/datetimepicker.css' %}">
+    <link rel="stylesheet" href="{% static 'notification/vendors/css/datetimepicker.css.map' %}">
+    <link rel="stylesheet" href="{% static 'notification/css/demo.css' %}">
+</head>
+
+<body ng-app="healthify">
+
+<div ng-controller="notificationController">
+    <h3 class="text-center">Notification Creator</h3>
+    </br>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <form data-abide enctype="multipart/form-data" id="notificationDetails" name="notificationDetails" novalidate="novalidate"
+                      method="post" style="padding-bottom: 20px">
+                    {% csrf_token %}
+    
+                    
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="header">HEADER</label>
+                            <input type="text" id="header" class="form-control" ng-model="notification.header" placeholder="header"
+                                   name="header" ng-required="true" ng-blur="checkWordCountHeader()">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="content">CONTENT</label>
+                            <input type="text" id="content" class="form-control" ng-model="notification.content"
+                                   placeholder="content" name="content" ng-required="true" ng-blur="checkWordCountContent()">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="url">URL</label>
+                            <input type="text" id="url" class="form-control" ng-model="notification.url" placeholder="url"
+                                   name="url" ng-required="true" ng-blur="checkUrl()">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="dropdown form-group">
+                          <label for="dateTime">DATE & TIME</label>
+                          <a class="dropdown-toggle" id="dropdown2" role="button" data-toggle="dropdown" data-target=".dropdown1-parent" href="#">
+                            <div class="input-group">
+                                <input type="text" id="dateTime" ng-required="true" class="form-control" data-ng-model="data.dateDropDownInput" placeholder="date and time">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                            </div>
+                          </a>
+                          <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                            <datetimepicker data-ng-model="data.dateDropDownInput" data-datetimepicker-config="{ dropdownSelector: '#dropdown2' }"/>
+                          </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="query">QUERY</label>
+                            <input type="text" id="query" class="form-control" ng-model="notification.query" placeholder="query"
+                                   name="query" ng-required="true">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group" ng-show="notificationDetails.$valid && validImage && validContent && validHeader">
+                            <input type="submit" class="btn btn-primary" value="ADD" ng-click="add(notification)">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-5" ng-if="validImage || validContent || validHeader">
+                <div class="row">
+                    <h5 class="center preview-text">PREVIEW</h5>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 preview">
+                        <div class="row"><span class="center">[[notification.header | uppercase]]</span></div>
+                        <div class="row"><span class="center">[[notification.content]]</span></div>
+                        <div class="row"><img ng-if="validImage" ng-src="[[notification.url]]"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div id="mydiv" style="display: none;width: 50; margin: 0 auto;">
+    <div class="loader"></div>
+</div>
+
+<script src="https://code.angularjs.org/1.3.14/angular.min.js"></script>
+<script src="https://code.angularjs.org/1.3.14/angular-messages.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+<script src="{% static 'notification/vendors/js/datetimepicker.js' %}"></script>
+<script src="{% static 'notification/vendors/js/datetimepicker.templates.js' %}"></script>
+
+<!--App Dependencies-->
+<script src="{% static 'notification/js/app.js' %}"></script>
+<script src="{% static 'notification/js/factory/main.factory.js' %}"></script>
+<script src="{% static 'notification/js/utils/image.factory.js' %}"></script>
+<script src="{% static 'notification/js/services/main.service.js' %}"></script>
+<script src="{% static 'notification/js/controllers/main.ctrl.js' %}"></script>
+</body>
+</html>
