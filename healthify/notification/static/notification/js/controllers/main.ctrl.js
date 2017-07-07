@@ -5,10 +5,14 @@ angular.module('healthify')
         'MainService',
         'ImageUtils',
         function ($scope, $timeout, MainService, ImageUtils) {
-            $scope.notification = {};
-            $scope.validHeader = false;
-            $scope.validContent = false;
-            $scope.validImage = false;
+
+            $scope.init = function() {
+                $scope.notification = {};
+                $scope.data = {};
+                $scope.validHeader = false;
+                $scope.validContent = false;
+                $scope.validImage = false;
+            };
 
             $scope.checkUrl = function(){
                 ImageUtils.isImage($scope.notification.url).then(function(data){
@@ -39,7 +43,14 @@ angular.module('healthify')
             $scope.add = function(notification){
                 notification.scheduledTime = $scope.data.dateDropDownInput;
                 $scope.notification = notification;
-                MainService.addNotification(notification);
-            }
+                MainService.addNotification(notification).then(function(data){
+                    $scope.init();
+                    console.log("saved");
+                }, function (error) {
+                    console.log(error);
+                });
+            };
+
+            $scope.init();
         }
     ]);
