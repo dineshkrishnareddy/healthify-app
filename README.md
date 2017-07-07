@@ -31,7 +31,15 @@ $ python manage.py runserver
 
 
 ## Demo
+-----
 
 Please check <a href="https://healthify-app.herokuapp.com/" target="_blank">DEMO</a> for further details
+
+
+## Limitations
+-----
+
+* For now we are using only images which are hosted in external server. So for image_url please specify external image url
+* As we don't have users table to execute query given by user, we just created a function ```send_notification``` only using notification_payload. So its a dummy function
 
 
